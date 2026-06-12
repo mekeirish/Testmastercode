@@ -1,7 +1,20 @@
-<html lang="fr"><head>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mastercode - Premium PWA Factory</title>
+    
+    <!-- Configuration PWA & Installabilité stricte -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4b6cb7">
+    
+    <!-- Optimisations Mobiles Spécifiques (iOS / Safari / Android) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mastercode">
+    <link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+
     <style>
         :root { 
             --bg: #1a1c20; --card-bg: #23272d; --shadow: #121417; 
@@ -20,7 +33,7 @@
         .token-row { display: flex; gap: 10px; margin-bottom: 10px; }
         input, textarea { 
             width: 100%; border: none; padding: 14px; border-radius: 12px; 
-            background: #1e2126; color: #fff; box-shadow: inset 4px 4px 8px var(--shadow), inset -2px -2px 6px var(--light); 
+            background: #1e2126; color: #fff; box-shadow: inset 4px 4px 8px var(--shadow), inset -2px -2px 66px var(--light); 
             box-sizing: border-box; outline: none; font-size: 1rem;
         }
         .btn-view { padding: 0 15px; border-radius: 12px; border: none; background: var(--card-bg); color: var(--accent); box-shadow: 4px 4px 8px var(--shadow), -2px -2px 6px var(--light); cursor: pointer; font-weight: bold; font-size: 0.7rem; white-space: nowrap; }
@@ -57,7 +70,6 @@
         .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.1); border-top: 2px solid var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* STYLES POUR LA MODALE SW */
         #sw-modal {
             display: none;
             position: fixed;
@@ -85,76 +97,14 @@
             box-sizing: border-box;
             border-radius: 12px;
         }
-        #sw-modal h3 {
-            margin-top: 0;
-            color: var(--warning);
-        }
-        .sw-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 15px;
-        }
-        .sw-buttons button {
-            background: var(--accent);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            color: white;
-        }
-        .sw-buttons button.reset {
-            background: var(--danger);
-        }
-        #sw-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 10000;
-        }
-        .sw-btn-icon {
-            background: var(--card-bg);
-            border: none;
-            font-size: 1.4rem;
-            padding: 8px 12px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-left: 10px;
-            box-shadow: 4px 4px 8px var(--shadow), -2px -2px 6px var(--light);
-        }
-        .header-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
+        #sw-modal h3 { margin-top: 0; color: var(--warning); }
+        .sw-buttons { display: flex; justify-content: flex-end; gap: 12px; margin-top: 15px; }
+        .sw-buttons button { background: var(--accent); border: none; padding: 8px 16px; border-radius: 30px; font-weight: bold; cursor: pointer; color: white; }
+        .sw-buttons button.reset { background: var(--danger); }
+        #sw-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; }
+        .sw-btn-icon { background: var(--card-bg); border: none; font-size: 1.4rem; padding: 8px 12px; border-radius: 30px; cursor: pointer; margin-left: 10px; box-shadow: 4px 4px 8px var(--shadow), -2px -2px 6px var(--light); }
+        .header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
     </style>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#4b6cb7">
-<link rel="apple-touch-icon" href="icon.png">
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#4b6cb7">
-<link rel="apple-touch-icon" href="icon.png">
-<link rel="manifest" href="./manifest.json">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#4b6cb7">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="icon.png">
-
-<link rel="manifest" href="./manifest.json">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#4b6cb7">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="icon.png">
 </head>
 <body>
 
@@ -193,7 +143,6 @@
         <span>FORGER L'APPLICATION</span>
     </button>
 
-    <!-- NOUVEAU BOUTON : INJECTER PWA DANS index.html (texte modifié) -->
     <button class="btn" onclick="injectPwaToGitHub()" id="injectBtn">
         <span>Yes, WE Can.</span>
     </button>
@@ -209,18 +158,15 @@
     <div id="status"></div>
     <button class="btn" onclick="copyReport()" id="copyBtn" style="color: #666; font-size: 0.75rem; display: none; background:none; box-shadow:none;">📋 COPIER LE RAPPORT</button>
 
-    <div class="signature">Made by Laiche Brahim 2026 Paris</div>
+    <div class="signature">Made by Brahim Laiche 2026 Paris</div>
 </div>
 
-<!-- MODALE SW (SCRIPT PERSONNALISÉ) -->
+<!-- MODALE SCRIPT PERSONNALISÉ (🧠 SW) -->
 <div id="sw-overlay"></div>
 <div id="sw-modal">
     <h3>✍️ Script personnalisé (JavaScript)</h3>
-    <p style="font-size:0.75rem; color:#aaa;">Ce code sera injecté à la fin du &lt;body&gt;. Il peut surcharger les fonctions existantes ou ajouter des fonctionnalités (notifications push, etc.).</p>
-    <textarea id="customScript" placeholder="// Collez votre code JS ici...
-// Exemple :
-// window.showBrowserNotification = function(title, body, tag) { ... }
-// console.log('Mon script personnalisé !');"></textarea>
+    <p style="font-size:0.75rem; color:#aaa;">Ce code sera injecté à la fin du &lt;body&gt;. Il peut surcharger les fonctions existantes ou ajouter des fonctionnalités.</p>
+    <textarea id="customScript" placeholder="// Collez votre code JS ici..."></textarea>
     <div class="sw-buttons">
         <button class="reset" onclick="resetCustomScript()">🗑️ Réinitialiser</button>
         <button onclick="saveCustomScript()">💾 Sauvegarder</button>
@@ -231,7 +177,6 @@
 <canvas id="canvas" style="display:none;"></canvas>
 
 <script>
-    // ---------- GESTION DU SCRIPT PERSONNALISÉ (SW) ----------
     const CUSTOM_SCRIPT_KEY = 'mastercode_custom_script';
 
     function loadCustomScriptFromStorage() {
@@ -268,26 +213,16 @@
         document.getElementById('sw-overlay').style.display = 'none';
     }
 
-    // ---------- FONCTION D'INJECTION PWA SUR GITHUB (CORRIGÉE) ----------
     async function injectPwaToGitHub() {
         const ghToken = document.getElementById('ghToken').value;
         const appName = document.getElementById('appName').value.trim().replace(/\s+/g, '-');
         const sourceHtml = document.getElementById('htmlInput').value.trim();
 
-        if (!ghToken) {
-            showToast("❌ Token GitHub manquant", true);
-            return;
-        }
-        if (!appName) {
-            showToast("❌ Nom du projet manquant", true);
-            return;
-        }
-        if (!sourceHtml) {
-            showToast("❌ Code HTML source vide. Collez d'abord votre HTML dans le champ prévu.", true);
+        if (!ghToken || !appName || !sourceHtml) {
+            showToast("❌ Données manquantes (Token, nom de projet ou HTML source)", true);
             return;
         }
 
-        // Récupérer le propriétaire (login) depuis le token
         let owner = "";
         try {
             const userRes = await fetch('https://api.github.com/user', {
@@ -305,14 +240,12 @@
         const path = 'index.html';
         const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
-        // Headers pour l'API GitHub
         const headers = {
             'Authorization': `token ${ghToken}`,
             'Accept': 'application/vnd.github.v3+json',
             'Content-Type': 'application/json'
         };
 
-        // Afficher le bouton live et mettre les LED en jaune (travail en cours)
         const liveBtn = document.getElementById('liveBtn');
         const led1 = document.getElementById('led1');
         const led2 = document.getElementById('led2');
@@ -324,8 +257,8 @@
         let checkInterval = null;
 
         try {
-            // 1. Récupérer le SHA du fichier distant (indispensable pour la mise à jour)
-            updateStatus("🔍 Récupération des infos du fichier distant...", false);
+            updateStatus("--- INJECTION SUR REPO EXISTANT ---", true);
+            updateStatus("🔍 Récupération des infos du fichier distant...");
             const getResp = await fetch(url, { headers });
             let sha = null;
             if (getResp.status === 200) {
@@ -334,59 +267,43 @@
             } else if (getResp.status !== 404) {
                 throw new Error(`Impossible d'accéder au fichier (${getResp.status})`);
             }
-            // Si le fichier n'existe pas (404), on pourra le créer (PUT sans sha)
 
-            // 2. Injecter les balises PWA dans le code HTML source (local)
-            const headElements = `
-<link rel="manifest" href="./manifest.json">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#4b6cb7">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="icon.png">
-`;
+            const headElements = `\n<link rel="manifest" href="manifest.json">\n<meta name="theme-color" content="#4b6cb7">\n<meta name="apple-mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n<link rel="apple-touch-icon" sizes="512x512" href="icon.png">\n`;
 
-            const swScript = `
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('Service Worker enregistré !'))
-        .catch(err => console.error('Erreur SW :', err));
-    });
-  }
-<\/script>
-`;
+            const swScript = `\n<script>\n  if ('serviceWorker' in navigator) {\n    window.addEventListener('load', () => {\n      navigator.serviceWorker.register('sw.js')\n        .then(reg => console.log('Service Worker enregistré !'))\n        .catch(err => console.error('Erreur SW :', err));\n    });\n  }\n<\/script>\n`;
 
-            // Utiliser DOMParser pour une injection propre
             const parser = new DOMParser();
             const doc = parser.parseFromString(sourceHtml, 'text/html');
 
-            // Insertion dans <head>
             if (doc.head) {
                 doc.head.insertAdjacentHTML('beforeend', headElements);
             } else {
                 doc.documentElement.insertAdjacentHTML('afterbegin', '<head>' + headElements + '</head>');
             }
 
-            // Insertion avant </body>
-            if (doc.body) {
-                doc.body.insertAdjacentHTML('beforeend', swScript);
-            } else {
-                doc.documentElement.insertAdjacentHTML('beforeend', '<body>' + swScript + '</body>');
+            const customScriptRaw = localStorage.getItem(CUSTOM_SCRIPT_KEY);
+            let customScriptBlock = '';
+            if (customScriptRaw && customScriptRaw.trim() !== '') {
+                customScriptBlock = `\n<!-- Custom script injected by Mastercode -->\n<script>\n${customScriptRaw}\n<\/script>\n`;
+                updateStatus("Script personnalisé injecté dans la cible...");
             }
 
-            // Reconstruire la chaîne HTML complète
+            if (doc.body) {
+                if (customScriptBlock) doc.body.insertAdjacentHTML('beforeend', customScriptBlock);
+                doc.body.insertAdjacentHTML('beforeend', swScript);
+            } else {
+                let fallback = (customScriptBlock) ? customScriptBlock + swScript : swScript;
+                doc.documentElement.insertAdjacentHTML('beforeend', '<body>' + fallback + '</body>');
+            }
+
             let updatedHtml = doc.documentElement.outerHTML;
-            if (!sourceHtml.toLowerCase().includes('<!doctype html>')) {
+            if (!updatedHtml.toLowerCase().includes('<!doctype html>')) {
                 updatedHtml = '<!DOCTYPE html>\n' + updatedHtml;
             }
 
-            // 3. Encoder en Base64 (UTF-8 sûr)
             const encodedContent = btoa(unescape(encodeURIComponent(updatedHtml)));
 
-            // 4. Envoyer la mise à jour (création ou modification) à GitHub
-            updateStatus("📤 Injection des balises PWA et envoi à GitHub...", false);
+            updateStatus("📤 Envoi de l'index.html modifié vers GitHub...");
             const putBody = {
                 message: "feat(pwa): injection auto des balises manifest + service worker via Mastercode",
                 content: encodedContent
@@ -404,39 +321,36 @@
                 throw new Error(errData.message || "Échec de l'upload");
             }
 
-            updateStatus("✅ index.html mis à jour avec succès sur GitHub !", false);
+            updateStatus("✅ index.html mis à jour avec succès sur GitHub !");
             showToast("✅ Injection PWA terminée !");
 
-            // 5. Vérifier que le site est déployé (GitHub Pages)
             const siteUrl = `https://${owner.toLowerCase()}.github.io/${repo}/`;
-            updateStatus(`🌐 Attente du déploiement sur ${siteUrl}...`, false);
+            updateStatus(`🌐 Attente du déploiement sur ${siteUrl}...`);
             
             let attempts = 0;
-            const maxAttempts = 40; // ~ 2 minutes (3s * 40 = 120s)
+            const maxAttempts = 40; 
             checkInterval = setInterval(async () => {
                 attempts++;
                 try {
-                    const testResp = await fetch(siteUrl, { method: 'HEAD', mode: 'no-cors' });
-                    // En mode no-cors, la promesse résout même si la réponse est opaque
-                    // On considère que c'est réussi si on n'a pas d'erreur réseau
+                    await fetch(siteUrl, { method: 'HEAD', mode: 'no-cors' });
                     clearInterval(checkInterval);
                     led1.className = 'led led-green';
                     led2.className = 'led led-green';
-                    updateStatus("✅ Site prêt et accessible !", false);
+                    updateStatus("✅ Site prêt et accessible en Live !");
                     showToast("🌍 Site disponible !");
                 } catch (err) {
                     if (attempts >= maxAttempts) {
                         clearInterval(checkInterval);
                         led1.className = 'led led-green';
                         led2.className = 'led led-green';
-                        updateStatus("⚠️ Délai d'attente dépassé, mais le site devrait bientôt être disponible.", false);
+                        updateStatus("⚠️ Déploiement long, mais le site sera accessible sous peu.");
                     }
                 }
             }, 3000);
 
         } catch (err) {
             console.error(err);
-            updateStatus(`❌ Erreur : ${err.message}`, false);
+            updateStatus(`❌ Erreur : ${err.message}`);
             showToast(`❌ Échec : ${err.message}`, true);
             led1.className = 'led led-red';
             led2.className = 'led led-red';
@@ -444,7 +358,6 @@
         }
     }
 
-    // ---------- RESTE DE L'APPLICATION (inchangé) ----------
     const saveKey = (id, val) => localStorage.setItem(id, val);
     document.getElementById('ghToken').value = localStorage.getItem('ghToken') || '';
 
@@ -569,8 +482,7 @@
 
     function openLiveSite() {
         if (liveOwner && liveRepo) {
-            const cleanOwner = liveOwner.toLowerCase();
-            window.open(`https://${cleanOwner}.github.io/${liveRepo}/`, '_blank');
+            window.open(`https://${liveOwner.toLowerCase()}.github.io/${liveRepo}/`, '_blank');
         }
     }
 
@@ -587,7 +499,7 @@
         document.getElementById('liveBtn').style.display = 'none';
         if (deploymentInterval) clearInterval(deploymentInterval);
         
-        updateStatus("--- SEQUENCE MASTERCODE 2.9 ACTIVÉE ---", true);
+        updateStatus("--- SEQUENCE MASTERCODE ACTIVÉE ---", true);
 
         try {
             const userRes = await fetch('https://api.github.com/user', { headers: { 'Authorization': `token ${ghToken}` } });
@@ -612,8 +524,8 @@
             const headE = '<' + '/' + 'head' + '>';
             const bodyE = '<' + '/' + 'body' + '>';
             
-            const swReg = `\n${tagS}if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));}${tagE}\n`;
-            const pwaTags = `\n<link rel="manifest" href="manifest.json">\n<meta name="theme-color" content="#4b6cb7">\n<link rel="apple-touch-icon" href="icon.png">`;
+            const swReg = `\n${tagS}if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));}${tagE}\n`;
+            const pwaTags = `\n<link rel="manifest" href="manifest.json">\n<meta name="theme-color" content="#4b6cb7">\n<link rel="apple-touch-icon" sizes="512x512" href="icon.png">`;
 
             let finalHtml = htmlInputContent;
             if (finalHtml.toLowerCase().includes(headE)) {
@@ -622,7 +534,6 @@
                 finalHtml = `<head>${pwaTags}</head>` + finalHtml;
             }
             
-            // ==== INJECTION DU SCRIPT PERSONNALISÉ (SW) ====
             const customScriptRaw = localStorage.getItem(CUSTOM_SCRIPT_KEY);
             let customScriptBlock = '';
             if (customScriptRaw && customScriptRaw.trim() !== '') {
@@ -635,12 +546,12 @@
             } else {
                 finalHtml += `${customScriptBlock}${swReg}`;
             }
-            // ==================================================
 
             const manifest = JSON.stringify({
+                "id": `/${appName}/`,
                 "name": appName, 
                 "short_name": appName, 
-                "start_url": "./index.html",
+                "start_url": "index.html",
                 "display": "standalone", 
                 "background_color": "#1a1c20", 
                 "theme_color": "#4b6cb7",
@@ -652,7 +563,7 @@
                 }]
             }, null, 2);
 
-            const sw = `const cacheName='${appName}-v1'; self.addEventListener('install',e=>{e.waitUntil(caches.open(cacheName).then(c=>c.addAll(['./index.html','./manifest.json','./icon.png'])));}); self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));});`;
+            const sw = `const cacheName='${appName}-v1'; self.addEventListener('install',e=>{e.waitUntil(caches.open(cacheName).then(c=>c.addAll(['index.html','manifest.json','icon.png'])));}); self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));});`;
 
             const utf8b64 = (s) => btoa(unescape(encodeURIComponent(s)));
 
@@ -705,27 +616,5 @@
         }
     }
 </script>
-
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));}</script>
-
-
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('Service Worker enregistré !'))
-        .catch(err => console.error('Erreur SW :', err));
-    });
-  }
-</script>
-
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('Service Worker enregistré !'))
-        .catch(err => console.error('Erreur SW :', err));
-    });
-  }
-</script>
-</body></html>
+</body>
+</html>
