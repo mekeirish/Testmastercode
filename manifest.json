@@ -1,6 +1,6 @@
 {
-  "name": "Mastercode App",
-  "short_name": "MastercodeApp",
+  "name": "Mastercode",
+  "short_name": "Mastercode",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#1a1c20",
